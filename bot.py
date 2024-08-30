@@ -8,7 +8,7 @@ from pyrogram import Client
 from pyrogram.enums import ParseMode
 import sys
 from datetime import datetime
-
+from database.database import log_verification, get_verification_count, cleanup_old_logs  # Import functions from database.py
 from config import API_HASH, APP_ID, LOGGER, TG_BOT_TOKEN, TG_BOT_WORKERS, FORCE_SUB_CHANNEL, CHANNEL_ID, PORT
 
 class Bot(Client):
@@ -56,14 +56,7 @@ class Bot(Client):
 
         self.set_parse_mode(ParseMode.HTML)
         self.LOGGER(__name__).info(f"Bot Running..!\n\nCreated by \nhttps://t.me/CodeXBotz")
-        self.LOGGER(__name__).info(f""" \n\n       
-░█████╗░░█████╗░██████╗░███████╗██╗░░██╗██████╗░░█████╗░████████╗███████╗
-██╔══██╗██╔══██╗██╔══██╗██╔════╝╚██╗██╔╝██╔══██╗██╔══██╗╚══██╔══╝╚════██║
-██║░░╚═╝██║░░██║██║░░██║█████╗░░░╚███╔╝░██████╦╝██║░░██║░░░██║░░░░░███╔═╝
-██║░░██╗██║░░██║██║░░██║██╔══╝░░░██╔██╗░██╔══██╗██║░░██║░░░██║░░░██╔══╝░░
-╚█████╔╝╚█████╔╝██████╔╝███████╗██╔╝╚██╗██████╦╝╚█████╔╝░░░██║░░░███████╗
-░╚════╝░░╚════╝░╚═════╝░╚══════╝╚═╝░░╚═╝╚═════╝░░╚════╝░░░░╚═╝░░░╚══════╝
-                                          """)
+        self.LOGGER(__name__).info(f""" \n\n  t.me/ultroidofficial_chat """)
         self.username = usr_bot_me.username
         #web-response
         app = web.AppRunner(await web_server())
@@ -74,3 +67,8 @@ class Bot(Client):
     async def stop(self, *args):
         await super().stop()
         self.LOGGER(__name__).info("Bot stopped.")
+        
+    async def periodic_cleanup(self):
+        while True:
+            await cleanup_old_logs()
+            await asyncio.sleep(3600)
