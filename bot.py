@@ -68,7 +68,7 @@ class Bot(Client):
         await super().stop()
         self.LOGGER(__name__).info("Bot stopped.")
         
-    async def periodic_cleanup(self):
+    async def periodic_cleanup():
         while True:
             await cleanup_old_logs()
             await asyncio.sleep(3600)
