@@ -7,4 +7,6 @@ python-dotenv
 pymongo
 dnspython
 # --- For-Web-Response ------- #
+Shortzy
+requests
 aiohttp
